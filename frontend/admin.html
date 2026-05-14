@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Admin Panel — TechNest</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"
+          integrity="sha512-5g2Nj3mqLOgClHi20oat1COW7jWvf7SyqnvwWUsMDwhjHeqeTl0C+uzjucLweruQxHbhDwiPLXlm8HBO0011pA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-gray-950">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 mb-1">
+        <div class="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <span class="text-lg font-bold text-white">Tech<span class="text-cyan-400">Nest</span></span>
+      </div>
+      <div class="flex items-center gap-2 mt-4 px-3 py-2 bg-purple-900/30 border border-purple-700/50 rounded-lg">
+        <div class="w-7 h-7 bg-purple-600 rounded-full flex items-center justify-center text-xs font-bold text-white">A</div>
+        <div>
+          <p id="adminUsername" class="text-white text-sm font-medium"></p>
+          <p class="text-purple-400 text-xs">Administrator</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="space-y-1 flex-1">
+      <button data-tab="dashboard"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all bg-cyan-600 text-white">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        Dashboard
+      </button>
+      <button data-tab="products"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-700">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        Products
+      </button>
+      <button data-tab="users"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-700">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        Users
+      </button>
+      <button data-tab="orders"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-700">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Orders
+      </button>
+      <button data-tab="audit"
+              class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white hover:bg-gray-700">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Audit Log
+      </button>
+    </nav>
+
+    <div class="mt-auto pt-6 border-t border-gray-700 space-y-2">
+      <a href="/index.html" class="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors px-3 py-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        View Store
+      </a>
+      <button id="logoutBtn"
+              class="w-full flex items-center gap-2 text-red-400 hover:text-red-300 text-sm transition-colors px-3 py-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="admin-main">
+    <div class="p-8">
+
+      <!-- ── DASHBOARD PANEL ───────────────────────────── -->
+      <div data-panel="dashboard">
+        <h1 class="text-2xl font-bold text-white mb-6">Dashboard</h1>
+
+        <!-- Stat cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+          <div class="stat-card cyan">
+            <p class="text-gray-400 text-sm font-medium mb-2">Total Users</p>
+            <p id="statUsers" class="text-3xl font-bold text-white">—</p>
+          </div>
+          <div class="stat-card green">
+            <p class="text-gray-400 text-sm font-medium mb-2">Active Products</p>
+            <p id="statProducts" class="text-3xl font-bold text-white">—</p>
+          </div>
+          <div class="stat-card purple">
+            <p class="text-gray-400 text-sm font-medium mb-2">Total Orders</p>
+            <p id="statOrders" class="text-3xl font-bold text-white">—</p>
+          </div>
+          <div class="stat-card orange">
+            <p class="text-gray-400 text-sm font-medium mb-2">Revenue</p>
+            <p id="statRevenue" class="text-3xl font-bold text-white">—</p>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-700">
+            <h2 class="text-lg font-semibold text-white">Recent Orders</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrdersBody">
+                <tr><td colspan="5" class="text-center py-6 text-gray-500">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Security summary -->
+        <div class="mt-6 bg-gray-800 border border-cyan-800/40 rounded-xl p-6">
+          <h3 class="text-cyan-400 font-semibold mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Security Controls Active
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> JWT httpOnly Cookies
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> CSRF Double-Submit
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> SQL Prepared Statements
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> Bcrypt (cost 12)
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> Rate Limiting
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> Account Lockout
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> Helmet CSP Headers
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> DOMPurify XSS Filter
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> RBAC Middleware
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> IDOR Prevention
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> Regex Input Validation
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-300">
+              <span class="text-green-400">✓</span> Audit Logging
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PRODUCTS PANEL ────────────────────────────── -->
+      <div data-panel="products" class="hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h1 class="text-2xl font-bold text-white">Product Management</h1>
+          <button id="addProductBtn"
+                  class="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Add Product
+          </button>
+        </div>
+        <div class="mb-4">
+          <input type="text" id="productSearchInput" placeholder="Search products..."
+                 class="form-input w-full max-w-sm border-gray-700" maxlength="100">
+        </div>
+        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr><th>#</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="productsTableBody">
+                <tr><td colspan="6" class="text-center py-6 text-gray-500">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── USERS PANEL ───────────────────────────────── -->
+      <div data-panel="users" class="hidden">
+        <h1 class="text-2xl font-bold text-white mb-6">User Management</h1>
+        <div class="mb-4">
+          <input type="text" id="userSearchInput" placeholder="Search users..."
+                 class="form-input w-full max-w-sm border-gray-700" maxlength="100">
+        </div>
+        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr><th>#</th><th>Username</th><th>Email</th><th>Role</th><th>Status</th><th>Action</th></tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr><td colspan="6" class="text-center py-6 text-gray-500">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ORDERS PANEL ──────────────────────────────── -->
+      <div data-panel="orders" class="hidden">
+        <div class="flex items-center justify-between mb-6">
+          <h1 class="text-2xl font-bold text-white">Order Management</h1>
+          <select id="orderStatusFilter"
+                  class="form-input w-auto border-gray-700 text-sm cursor-pointer">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr><th>#</th><th>Customer</th><th>Email</th><th>Total</th><th>Status</th><th>Date</th></tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr><td colspan="6" class="text-center py-6 text-gray-500">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── AUDIT LOG PANEL ───────────────────────────── -->
+      <div data-panel="audit" class="hidden">
+        <h1 class="text-2xl font-bold text-white mb-6">Audit Log</h1>
+        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+          <div class="px-6 py-3 border-b border-gray-700 flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span class="text-gray-400 text-sm">Live security event log — all sensitive actions recorded</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="data-table">
+              <thead>
+                <tr><th>User</th><th>Action</th><th>Resource</th><th>IP Address</th><th>Time</th></tr>
+              </thead>
+              <tbody id="auditTableBody">
+                <tr><td colspan="5" class="text-center py-6 text-gray-500">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PRODUCT MODAL ────────────────────────────────── -->
+  <div id="productModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="flex items-center justify-between mb-6">
+        <h2 id="modalTitle" class="text-xl font-bold text-white">Add Product</h2>
+        <button id="closeProductModal" class="text-gray-400 hover:text-white transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <form id="productForm" novalidate>
+        <input type="hidden" id="prodId">
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Product Name <span class="text-red-400">*</span></label>
+            <input type="text" id="prodName" class="form-input border-gray-600"
+                   placeholder="e.g. MacBook Pro 16" maxlength="100" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Category <span class="text-red-400">*</span></label>
+            <input type="text" id="prodCategory" class="form-input border-gray-600"
+                   placeholder="e.g. Laptops" maxlength="50" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Price ($) <span class="text-red-400">*</span></label>
+            <input type="number" id="prodPrice" class="form-input border-gray-600"
+                   placeholder="999.99" min="0.01" step="0.01" max="99999999" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Stock</label>
+            <input type="number" id="prodStock" class="form-input border-gray-600"
+                   placeholder="0" min="0" max="99999" value="0">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Image URL</label>
+            <input type="url" id="prodImageUrl" class="form-input border-gray-600"
+                   placeholder="https://..." maxlength="500">
+          </div>
+          <div class="col-span-2">
+            <label class="block text-sm font-medium text-gray-300 mb-2">Description</label>
+            <textarea id="prodDescription" class="form-input border-gray-600 resize-none" rows="3"
+                      placeholder="Product description..." maxlength="2000"></textarea>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button type="submit"
+                  class="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white py-2.5 rounded-lg font-semibold transition-colors">
+            Save Product
+          </button>
+          <button type="button" id="cancelModal"
+                  class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2.5 rounded-lg font-semibold transition-colors">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    document.getElementById('cancelModal')?.addEventListener('click', () => {
+      document.getElementById('productModal').classList.add('hidden');
+      document.getElementById('productModal').classList.remove('flex');
+    });
+    // Close modal on overlay click
+    document.getElementById('productModal')?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.add('hidden');
+        e.currentTarget.classList.remove('flex');
+      }
+    });
+  </script>
+</body>
+</html>

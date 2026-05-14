@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Sign In — TechNest</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"
+          integrity="sha512-5g2Nj3mqLOgClHi20oat1COW7jWvf7SyqnvwWUsMDwhjHeqeTl0C+uzjucLweruQxHbhDwiPLXlm8HBO0011pA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-12"
+      style="background: radial-gradient(ellipse at top, #0f2a3d 0%, #0f172a 60%)">
+
+  <div class="w-full max-w-md">
+
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <a href="/index.html" class="inline-flex items-center gap-2 mb-4">
+        <div class="w-10 h-10 bg-cyan-500 rounded-xl flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <span class="text-2xl font-bold text-white">Tech<span class="text-cyan-400">Nest</span></span>
+      </a>
+      <h1 class="text-3xl font-bold text-white mt-2">Welcome back</h1>
+      <p class="text-gray-400 mt-1">Sign in to your account</p>
+    </div>
+
+    <!-- Security info badges -->
+    <div class="flex justify-center gap-3 mb-6">
+      <span class="security-badge">🔒 httpOnly Cookie</span>
+      <span class="security-badge">🛡️ CSRF Protected</span>
+    </div>
+
+    <!-- Login Card -->
+    <div class="bg-gray-800/80 backdrop-blur border border-gray-700 rounded-2xl p-8 shadow-2xl">
+
+      <!-- Error message -->
+      <div id="loginError" class="hidden mb-5 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-sm"></div>
+
+      <form id="loginForm" novalidate>
+        <!-- Username / Email -->
+        <div class="mb-5">
+          <label for="identifier" class="block text-sm font-medium text-gray-300 mb-2">
+            Username or Email
+          </label>
+          <input type="text" id="identifier" name="identifier"
+                 class="form-input border-gray-600"
+                 placeholder="admin or user@example.com"
+                 autocomplete="username"
+                 maxlength="100" required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <label for="password" class="text-sm font-medium text-gray-300">Password</label>
+          </div>
+          <div class="relative">
+            <input type="password" id="password" name="password"
+                   class="form-input border-gray-600 pr-10"
+                   placeholder="••••••••"
+                   autocomplete="current-password"
+                   maxlength="256" required>
+            <button type="button" id="togglePwd"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="loginBtn" class="btn-primary py-3 text-base">
+          Sign In
+        </button>
+      </form>
+
+      <p class="text-center text-gray-400 text-sm mt-6">
+        Don't have an account?
+        <a href="/register.html" class="text-cyan-400 hover:text-cyan-300 font-medium transition-colors">Create one</a>
+      </p>
+    </div>
+
+    <!-- Demo credentials box -->
+    <div class="mt-6 bg-gray-900 border border-gray-700 rounded-xl p-4">
+      <p class="text-gray-400 text-xs font-semibold uppercase tracking-wide mb-3">Demo Credentials</p>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between bg-gray-800 rounded-lg px-3 py-2">
+          <span class="text-xs text-gray-400">Admin</span>
+          <div class="text-xs font-mono">
+            <span class="text-cyan-400">admin</span>
+            <span class="text-gray-600"> / </span>
+            <span class="text-gray-300">Admin@1234</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between bg-gray-800 rounded-lg px-3 py-2">
+          <span class="text-xs text-gray-400">User</span>
+          <div class="text-xs font-mono">
+            <span class="text-cyan-400">johndoe</span>
+            <span class="text-gray-600"> / </span>
+            <span class="text-gray-300">User@1234</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mt-3">⚠ Account locks after 5 failed attempts (15 min cooldown)</p>
+    </div>
+
+    <!-- Security features note -->
+    <div class="mt-4 text-center">
+      <a href="/index.html" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">← Back to store</a>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/validation.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Show/hide password toggle
+    document.getElementById('togglePwd')?.addEventListener('click', () => {
+      const pwd = document.getElementById('password');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
+    });
+
+    // Redirect if already logged in
+    if (getCurrentUser()) {
+      const u = getCurrentUser();
+      window.location.href = u.role === 'admin' ? '/admin.html' : '/index.html';
+    }
+  </script>
+</body>
+</html>
