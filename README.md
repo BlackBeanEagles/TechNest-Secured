@@ -449,11 +449,3 @@ If the server is down, the script exits with a connection error—start `npm run
 ## Ethics and scope
 
 Use this project only on **systems you own or are explicitly authorized** to test. It is an educational artifact, not a turnkey production storefront.
-
----
-
-## Suggested one-liner for resumes or GitHub bio
-
-> **TechNest** — Full-stack e-commerce demo with JWT sessions in httpOnly cookies, double-submit CSRF, RBAC, parameterized SQL with sort whitelisting, rate limits, account lockout, Helmet CSP, and audit logging—documented with a reproducible security test plan.
-
-If you want this tailored to a **specific course rubric PDF**, paste the rubric headings and I can align the table IDs (R1, R2, …) to match your instructor’s wording exactly.
